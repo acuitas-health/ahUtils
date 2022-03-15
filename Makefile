@@ -9,17 +9,7 @@ document:
 	Rscript -e 'devtools::document()'
 
 install: 
-	Rscript -e 'remotes::install()'
-
-install_git: 
-	Rscript -e 'remotes::install_git("https://gitlab.com/acuitas-public/acuitasadhoc.git", force = TRUE)'
-
-
-install_gitlab: 
-	Rscript -e 'remotes::install_gitlab("acuitas-public/acuitasadhoc", force = TRUE)'
-
-install_github: 
-	Rscript -e 'remotes::install_github("choens/acuitasadhoc", force = TRUE)'
+	Rscript -e 'remotes::install_github("acuitas-health/ahUtils")'
 
 release:
 	Rscript -e 'devtools::release(".")'
