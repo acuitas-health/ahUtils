@@ -13,52 +13,40 @@
 #' connection issues and not much else.
 #' @param params A LIST of parameters to alter the query.
 #'
-#' @return A data frame with your data.
+#' @return A data frame with your data. If the query doesn't return anything,
+#'   you will receive an empty tibble.
 #'
 #' @export
 import_data <- function(file = "query.sql", folder = "sql", verbose = FALSE, params = NULL) {
   config <- config::get()
   qry_file <- file.path(folder, file)
   connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
-  dbConnectInsistent <- purrr::insistently(DBI::dbConnect, rate = connect_rate)
-  dbGetQueryInsistent <- purrr::insistently(DBI::dbGetQuery, rate = connect_rate)
+  dbGetQueryInsistent <- purrr::insistently(
+    DBI::dbGetQuery,
+    rate = connect_rate)
   if (verbose) cat("\n- Connecting as: ", Sys.getenv("edw_user"))
-  ## con <- con <- dbConnect(
-  ##   odbc::odbc(),
-  ##   dsn = config$dsn_name,
-  ##   timeout = 20,
-  ##   uid = Sys.getenv("edw_user"),
-  ##   pwd = Sys.getenv("edw_pass")
-  ## )
-  con <- dbConnectInsistent(
-    odbc::odbc(),
-    dsn = config$dsn_name,
-    timeout = 20,
-    uid = Sys.getenv("edw_user"),
-    pwd = Sys.getenv("edw_pass")
-  )
+  con <- ahUtils::open_con()
   stopifnot(exprs = {
     file.exists(qry_file)
     exists("con")
   })
-  
-  
-
-  ## ---- query.sql ----
-  qry <- readr::read_file(qry_file)
-  if (verbose) cat("\n- Downloading data.")
   qry <- readr::read_file(qry_file)
   if (verbose) cat("\n- Downloading data.")
   if (is.null(params)) {
-    res <- tibble::as_tibble(DBI::dbGetQuery(con, qry))
+    res <- dbGetQueryInsistent(con, qry)
   } else {
-    res <- tibble::as_tibble(DBI::dbGetQuery(con, qry, params = params))
-  }
-  if (verbose) {
-    cat(paste("N Rows Downloaded:", nrow(res)))
-    cat(head(res))
+    res <- dbGetQueryInsistent(con, qry, params = params)
   }
   DBI::dbDisconnect(con)
-  res
+  if (exists("res")) {
+    if (verbose) {
+      cat(paste("N Rows Downloaded:", nrow(res)))
+      cat(head(res))
+    }
+    return(tibble::as_tibble(res))
+  } else {
+    warning("No rows of data downloaded.")
+    return(tibble::tibble())
+  }  
 } ## END import_data
 

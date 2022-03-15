@@ -18,7 +18,8 @@ connection issues and not much else.}
 \item{params}{A LIST of parameters to alter the query.}
 }
 \value{
-A data frame with your data.
+A data frame with your data. If the query doesn't return anything,
+you will receive an empty tibble.
 }
 \description{
 Looks for "file" in "folder". If it exists, it attempts to run the query
