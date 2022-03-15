@@ -38,7 +38,7 @@ import_data <- function(file = "query.sql", folder = "sql", verbose = FALSE, par
     pwd = Sys.getenv("edw_pass")
   )
   stopifnot(exprs = {
-    file.exists(qry_file),
+    file.exists(qry_file)
     exists("con")
   })
   
