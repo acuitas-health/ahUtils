@@ -1,0 +1,8 @@
+^renv$
+^renv\.lock$
+^LICENSE\.md$
+^.*\.Rhistory$
+^.*\.Rproj$
+^\.Rproj\.user$
+^Makefile$
+^\.vscode$

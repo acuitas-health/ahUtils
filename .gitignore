@@ -1,0 +1,14 @@
+.*lock*
+*.xlsx
+*.html
+*.csv
+*.rda
+.rda
+
+.Renviron
+.Rhistory
+.Rapp.history
+.Ruserda
+*.Rproj*
+.Rproj.user
+.vscode
