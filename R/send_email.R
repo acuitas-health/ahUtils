@@ -62,11 +62,7 @@ send_email <- function(emails_to_send = NULL) {
     )
   for (i in 1:nrow(emails_to_send)) {
     if (i > config$number_reports_to_send) break()
-    if (emails_to_send$stratification[i] == "") {
-      cat("\n\n- Sending (one) email.")
-    } else {
-      cat("\n\n- Sending email: ", emails_to_send$stratification[i], "\n  ")
-    }
+    cat("\n\n- Sending email: ", emails_to_send$stratification[i], "\n  ")
     email_to_send <-
       blastula::render_email(
         input = "email.Rmd",
