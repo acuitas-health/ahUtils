@@ -4,6 +4,8 @@
 #'
 #' @param file The config.yml file you want to validate. You can specify any
 #' file, but it defaults to ./config.yml.
+#'
+#' @export
 validate_config <- function(file = "./config.yml") {
   msg <- "\n"
   cfg <- yaml::read_yaml(file)

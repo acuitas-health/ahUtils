@@ -12,6 +12,7 @@
 #' than any other DBI connection object.
 #' 
 #' @return A connection object.
+#'
 #' @export
 open_con <- function() {
   config <- config::get()

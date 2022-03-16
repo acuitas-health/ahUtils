@@ -15,6 +15,7 @@
 #' do anything useful. The default is zero.
 #'
 #' @return None
+#'
 #' @export
 set_config_value <- function(parameter, value, configuration = "default", preview = FALSE) {
   stopifnot(exprs = {

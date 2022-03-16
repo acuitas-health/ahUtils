@@ -8,6 +8,7 @@
 #' @return A vector of the stratifications. If there aren't any, "".
 #'
 #' @import magrittr
+#'
 #' @export
 get_stratifications <- function(data = NULL, strat_col = NULL) {
   stopifnot(exprs = {
