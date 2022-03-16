@@ -8,6 +8,9 @@
 #' Because this function uses config.yml and .Renviron, there are NO input
 #' parameters to this function.
 #'
+#' You an use dbDisconnect with this returned object because it is NO different
+#' than any other DBI connection object.
+#' 
 #' @return A connection object.
 #' @export
 open_con <- function() {
@@ -20,10 +23,33 @@ open_con <- function() {
   ##   timeout = 20,
   ##   uid = Sys.getenv("edw_user"),
   ##   pwd = Sys.getenv("edw_pass"))
-  dbConnectInsistent(
-    odbc::odbc(),
-    dsn = config$dsn_name,
-    timeout = 20,
-    uid = Sys.getenv("edw_user"),
-    pwd = Sys.getenv("edw_pass"))
+  can_connect <-
+    DBI::dbCanConnect(
+      odbc::odbc(),
+      dsn = config$dsn_name,
+      uid = Sys.getenv("edw_user"),
+      pwd = Sys.getenv("edw_pass"))
+  if (can_connect) {
+    dbConnectInsistent(
+      odbc::odbc(),
+      dsn = config$dsn_name,
+      timeout = 20,
+      uid = Sys.getenv("edw_user"),
+      pwd = Sys.getenv("edw_pass"))
+  } else {
+    cannot_ping <- max(is.na(pingr::ping("acny.hosted"))) == 1
+    if (cannot_ping) {
+      msg <- paste(
+        " **** Unable to ping acny.hosted. Are you connected to the VPN? ****",
+        attr(can_connect, "reason"),
+        sep = "\n\n")
+      stop(msg)
+    } else {
+      msg <- paste(
+        " **** I can ping acny.hosted, but I cannot connect . . . .  ****",
+        attr(can_connect, "reason"),
+        sep = "\n\n")
+      stop(msg)
+    }
+  }    
 }

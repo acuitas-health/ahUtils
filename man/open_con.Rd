@@ -18,4 +18,7 @@ default and rsconnect configurations.
 \details{
 Because this function uses config.yml and .Renviron, there are NO input
 parameters to this function.
+
+You an use dbDisconnect with this returned object because it is NO different
+than any other DBI connection object.
 }

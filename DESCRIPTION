@@ -1,6 +1,6 @@
 Package: ahUtils
 Title: Acuitas Utils
-Version: 0.5.5
+Version: 0.5.6
 Authors@R: 
     person(given = "Andy",
            family = "Choens",
@@ -12,7 +12,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Imports: 
+Imports:
     config,
     DBI,
     dplyr,
@@ -20,6 +20,7 @@ Imports:
     lubridate,
     magrittr,
     odbc,
+    pingr,
     purrr,
     readr,
     stringr,
@@ -31,4 +32,3 @@ Depends:
 Suggests:
     devtools,
     usethis
-
