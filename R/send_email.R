@@ -65,7 +65,7 @@ send_email <- function(emails_to_send = NULL) {
     if (emails_to_send$stratification[i] == "") {
       cat("\n\n- Sending (one) email.")
     } else {
-      cat("\n\n- Sending email:", emails_to_send$stratification[i])
+      cat("\n\n- Sending email: ", emails_to_send$stratification[i], "\n  ")
     }
     email_to_send <-
       blastula::render_email(
@@ -109,13 +109,6 @@ send_email <- function(emails_to_send = NULL) {
         " email."
       )
       cat(msg)
-      if (config::is_active("rsconnect")) {
-        httr::POST(
-          url = config$slack_webhook_url,
-          body = list(text = msg),
-          encode = "json"
-        )
-      }
     }
   }
   cat("\n- All done sending email.")
