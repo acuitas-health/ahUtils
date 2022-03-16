@@ -48,7 +48,7 @@ send_email <- function(emails_to_send = NULL) {
     ) %>%
     dplyr::group_by(app, subset, site, organization, stratification, created_dt, report, report_description, report_name, customer, sent, date_sent) %>%
     dplyr::summarize(to = paste(iconv(to, to = "ASCII"), collapse = ", ")) %>%
-    ungroup() %>%
+    dplyr::ungroup() %>%
     dplyr::select(
       "date_sent",
       "customer",
@@ -124,15 +124,15 @@ send_email <- function(emails_to_send = NULL) {
       dplyr::bind_rows(
         emails_to_send %>%
           ## dplyr::select(-"cc", -"bcc") %>%
-          dplyr::mutate("to" = str_split(to, ",")) %>%
+          dplyr::mutate("to" = stringr::str_split(to, ",")) %>%
           tidyr::unnest(cols = c("to")),
         ## emails_to_send %>%
         ##    dplyr::select(-"to", -"bcc") %>%
-        ##    dplyr::mutate("cc" = str_split(cc, ",")) %>%
+        ##    dplyr::mutate("cc" = stringr::str_split(cc, ",")) %>%
         ##    tidyr::unnest(cols = c("cc")),
         ## emails_to_send %>%
         ##    dplyr::select(-"cc", -"to") %>%
-        ##    dplyr::mutate("bcc" = str_split(bcc, ",")) %>%
+        ##    dplyr::mutate("bcc" = springr::str_split(bcc, ",")) %>%
         ##    tidyr::unnest(cols = c("bcc"))
       ) %>%
       dplyr::filter(!is.na(to)) %>%

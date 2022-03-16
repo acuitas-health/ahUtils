@@ -1,10 +1,13 @@
 #' validate_config
 #'
-#' Validates that the config.yml is good.
+#' Validates the config.yml in the project repo.
 #'
 #' @param file The config.yml file you want to validate. You can specify any
 #' file, but it defaults to ./config.yml.
 #'
+#' @return Returns TRUE if no problems are found. Otherwise, it will stop things
+#'   and throw an error. This function exists for the side effects.
+#' 
 #' @export
 validate_config <- function(file = "./config.yml") {
   msg <- "\n"
@@ -30,5 +33,6 @@ validate_config <- function(file = "./config.yml") {
   }
   if (length(msg) == 0) msg <- "\n- No errors found in config."
   cat(msg)
+  TRUE
 } ## END validate_config
 

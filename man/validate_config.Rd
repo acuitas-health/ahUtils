@@ -10,6 +10,10 @@ validate_config(file = "./config.yml")
 \item{file}{The config.yml file you want to validate. You can specify any
 file, but it defaults to ./config.yml.}
 }
+\value{
+Returns TRUE if no problems are found. Otherwise, it will stop things
+and throw an error. This function exists for the side effects.
+}
 \description{
-Validates that the config.yml is good.
+Validates the config.yml in the project repo.
 }

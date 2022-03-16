@@ -18,7 +18,7 @@ find_strat_col <- function(data = NULL) {
   if (is.null(data)) {
     return(NULL)
   }
-  if (is_null(col_name)) {
+  if (is.null(col_name)) {
     warning("There is no stratification (strat_col) set in config.yaml.")
     return(NA)
   }
