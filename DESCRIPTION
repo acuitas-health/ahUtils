@@ -1,6 +1,6 @@
 Package: ahUtils
 Title: Acuitas Utils
-Version: 0.5.7
+Version: 0.5.8
 Authors@R: 
     person(given = "Andy",
            family = "Choens",
