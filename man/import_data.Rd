@@ -4,13 +4,22 @@
 \alias{import_data}
 \title{import_data}
 \usage{
-import_data(file = "query.sql", folder = "sql", verbose = FALSE, params = NULL)
+import_data(
+  file = "query.sql",
+  folder = "sql",
+  qry = NULL,
+  config = NULL,
+  verbose = FALSE,
+  params = NULL
+)
 }
 \arguments{
 \item{file}{The file where the query lives.}
 
 \item{folder}{The folder where the query lives. If validation.sql is in this
 folder it will be run BEFORE the sql file.}
+
+\item{qry}{A query to import, without a file.}
 
 \item{verbose}{If TRUE, this function talks a lot. Useful for debugging
 connection issues and not much else.}
@@ -22,9 +31,6 @@ A data frame with your data. If the query doesn't return anything,
 you will receive an empty tibble.
 }
 \description{
-Looks for "file" in "folder". If it exists, it attempts to run the query
-AFTER running validation.sql if it exists. If validation.sql exists, all rows
-must return 1 (TRUE) before the report query in "file" will be run. If
-validation.sql fails, the function will stop for the number of seconds
-defined in wait_time before trying to rerun validation.sql.
+Looks for "file" in "folder". If it exists, it attempts to run the query.
+The user may also pass a query directly to import_data.
 }

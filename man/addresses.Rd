@@ -7,11 +7,12 @@
 addresses(x)
 }
 \arguments{
-\item{x}{Something}
+\item{x}{A vector of email addresses.}
 }
 \value{
 A cleaned up set of addresses.
 }
 \description{
-Some discussion.
+Separates addresses. This function is deprecated and will be removed in a
+future release.
 }

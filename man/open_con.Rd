@@ -4,7 +4,11 @@
 \alias{open_con}
 \title{open_con}
 \usage{
-open_con()
+open_con(config = NULL)
+}
+\arguments{
+\item{config}{A configlist. If not provided, the function will open
+config.yml itself.}
 }
 \value{
 A connection object.
@@ -16,9 +20,9 @@ defined. In your config.yml file, you must have dsn_name defined for both the
 default and rsconnect configurations.
 }
 \details{
-Because this function uses config.yml and .Renviron, there are NO input
-parameters to this function.
+The function can use any list with a dsn_name variable named. If not, it will
+open config.yml and find the dsn_name for itself.
 
-You an use dbDisconnect with this returned object because it is NO different
+You an use dbDisconnect with the con object because it is NO different
 than any other DBI connection object.
 }
