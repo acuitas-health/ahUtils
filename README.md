@@ -10,6 +10,7 @@ Although intended for use by Acuitas Health staff, others are welcome to use thi
 
 Full documentation is available for each function after loading the package with `library(ahUtils).
 
+- `app_control`: Should the app/report run? Sets global variables run_flag and email_flag. If there are warnings/errors, it will also create some text output for the user/report. This is technically a terrible function because it is all about the side effects.
 - `clean_stratifications()`: The stratification columnn is used to name output files. This function cleans these names of special characters which could cause problems in a file name.
 - `extract_urls()`: Extracts URLs from a string.
 - `find_strat_col()`: Finds the stratification column in `data` based on the
@@ -22,6 +23,7 @@ Full documentation is available for each function after loading the package with
   internally of `import_data()` but can be used separately as well. Uses
   config.yml and .Renviron for all parts of the connection.
 - `read_description()`: Reads a R DESCRIPTION file and extracts dependencies.
+- `report_config`: Returns a tibble of report configurations for inclusion in reports.
 - `send_email()`: Sends emails to people in the recipients list.
 - `set_config_value()`: Sets the value of any parameter in a config.yml file.
 - `validate_config()`: Validates an Acuitas config.yml. Tries to prevent errors
