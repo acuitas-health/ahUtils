@@ -1,8 +1,9 @@
 #' addresses
 #'
-#' Some discussion.
+#' Separates addresses. This function is deprecated and will be removed in a
+#' future release.
 #'
-#' @param x Something
+#' @param x A vector of email addresses.
 #'
 #' @return A cleaned up set of addresses.
 #'
