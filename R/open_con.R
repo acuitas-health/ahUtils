@@ -26,7 +26,7 @@ open_con <- function(config = NULL) {
     !is.null(config$dsn_name)
     ## Checks for the existence of our system vars.
     Sys.getenv("edw_user") != ""
-    Sys.getenv("edw_pass")
+    Sys.getenv("edw_pass") != ""
   })
   connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
   dbConnectInsistent <- purrr::insistently(DBI::dbConnect, rate = connect_rate)
