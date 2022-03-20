@@ -39,8 +39,8 @@ import_data <- function(file = "query.sql", folder = "sql", qry = NULL, config =
     })
   }
   stopifnot(exprs = {
-    stringr::str_detect("select")
-    stringr::str_detect("where")
+    stringr::str_detect(qry, "select")
+    stringr::str_detect(qry, "from")
   })
   if (verbose) cat("\n- Downloading data.")
   if (is.null(params)) {
