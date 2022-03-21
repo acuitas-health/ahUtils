@@ -9,7 +9,7 @@ document:
 	Rscript -e 'devtools::document()'
 
 install: 
-	Rscript -e 'remotes::install_github("acuitas-health/ahUtils")'
+	Rscript -e 'remotes::install_github("acuitas-health/ahUtils", force = TRUE)'
 
 release:
 	Rscript -e 'devtools::release(".")'

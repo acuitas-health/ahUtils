@@ -1,6 +1,6 @@
 Package: ahUtils
 Title: Acuitas Utils
-Version: 0.5.13
+Version: 0.5.14
 Authors@R: 
     person(given = "Andy",
            family = "Choens",
@@ -15,7 +15,7 @@ RoxygenNote: 7.1.2
 Imports:
     config,
     DBI,
-    dplyr,
+    dplyr,x
     httr,
     lubridate,
     magrittr,
