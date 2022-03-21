@@ -30,15 +30,14 @@ import_data <- function(file = "query.sql", folder = "sql", qry = NULL, config =
     qry_file <- file.path(folder, file)
     stopifnot(exprs = {
       file.exists(qry_file)
-      exists("con")
     })
     qry <- readr::read_file(qry_file)
   } else {
     stopifnot(exprs = {
-      exists("con")
     })
   }
   stopifnot(exprs = {
+    exists("con")
     stringr::str_detect(qry, "select")
     stringr::str_detect(qry, "from")
   })
@@ -49,15 +48,9 @@ import_data <- function(file = "query.sql", folder = "sql", qry = NULL, config =
     res <- dbGetQueryInsistent(con, qry, params = params)
   }
   DBI::dbDisconnect(con)
-  if (exists("res")) {
-    if (verbose) {
-      cat(paste("N Rows Downloaded:", nrow(res)))
-      cat(head(res))
-    }
-    return(tibble::as_tibble(res))
-  } else {
-    warning("No rows of data downloaded.")
-    return(tibble::tibble())
-  }  
+  if (verbose) {
+    cat(paste("N Rows Downloaded:", nrow(res)))
+    cat(head(res))
+  }
+  return(tibble::as_tibble(res))  
 } ## END import_data
-

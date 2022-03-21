@@ -17,7 +17,6 @@ validate_config <- function(file = "./config.yml") {
   })
   cfg_default <- cfg$default == "TODO"
   cfg_rsconnect <- cfg$rsconnect == "TODO"
-
   ## Return values.
   if (max(cfg_default) == TRUE) {
     wrn <- "Config \"default\" incomplete. Replace TODO entries."
@@ -32,7 +31,6 @@ validate_config <- function(file = "./config.yml") {
     rm(wrn)
   }
   if (length(msg) == 0) msg <- "\n- No errors found in config."
-  cat(msg)
-  TRUE
+  return(msg)
 } ## END validate_config
 
