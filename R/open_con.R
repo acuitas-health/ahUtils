@@ -28,8 +28,8 @@ open_con <- function(config = NULL) {
     Sys.getenv("edw_user") != ""
     Sys.getenv("edw_pass") != ""
   })
-  connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
-  dbConnectInsistent <- purrr::insistently(DBI::dbConnect, rate = connect_rate)
+  ## connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
+  ## dbConnectInsistent <- purrr::insistently(DBI::dbConnect, rate = connect_rate)
   can_connect <-
     DBI::dbCanConnect(
       odbc::odbc(),
@@ -37,7 +37,13 @@ open_con <- function(config = NULL) {
       uid = Sys.getenv("edw_user"),
       pwd = Sys.getenv("edw_pass"))
   if (can_connect) {
-    dbConnectInsistent(
+    ## dbConnectInsistent(
+    ##   odbc::odbc(),
+    ##   dsn = config$dsn_name,
+    ##   timeout = 20,
+    ##   uid = Sys.getenv("edw_user"),
+    ##   pwd = Sys.getenv("edw_pass"))
+    DBI::dbConnect(
       odbc::odbc(),
       dsn = config$dsn_name,
       timeout = 20,

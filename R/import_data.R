@@ -16,10 +16,10 @@
 #'
 #' @export
 import_data <- function(file = "query.sql", folder = "sql", qry = NULL, config = NULL,  verbose = FALSE, params = NULL) {
-  connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
-  dbGetQueryInsistent <- purrr::insistently(
-    DBI::dbGetQuery,
-    rate = connect_rate)
+  ## connect_rate <- purrr::rate_delay(pause = 30, max_times = 10)
+  ## dbGetQueryInsistent <- purrr::insistently(
+  ##   DBI::dbGetQuery,
+  ##   rate = connect_rate)
   if (verbose) cat("\n- Connecting as: ", Sys.getenv("edw_user"))
   if (is.null(config)) {
     con <- ahUtils::open_con()
@@ -43,9 +43,11 @@ import_data <- function(file = "query.sql", folder = "sql", qry = NULL, config =
   })
   if (verbose) cat("\n- Downloading data.")
   if (is.null(params)) {
-    res <- dbGetQueryInsistent(con, qry)
+    ## res <- dbGetQueryInsistent(con, qry)
+    res <- DBI::dbGetQuery(con, qry)
   } else {
-    res <- dbGetQueryInsistent(con, qry, params = params)
+    ## res <- dbGetQueryInsistent(con, qry, params = params)
+    res <- DBI::dbGetQuery(con, qry, params = params)
   }
   DBI::dbDisconnect(con)
   if (verbose) {
