@@ -11,7 +11,7 @@
 #' 
 #' @export
 #' 
-app_control <- function(config = NULL) {
+app_control <- function(config = NULL, permissive = FALSE) {
   if (is.null(config)) {
     config <- config::get()
   }
@@ -20,12 +20,24 @@ app_control <- function(config = NULL) {
   })
   run_flag <<- FALSE
   email_flag <<- FALSE
-  qry <- "select * from IDEA.AppControl1.AppControl1 where AppNM = ?"
-  app_control_1 <-
-    import_data(
-      config = config,
-      qry = qry,
-      params = list(config$application))
+  ## There is no App Control 1 on Dev, so we have to force Prod, not matter
+  ## what the config.yml says.
+  config$dsn_name <- stringr::str_replace(config$dsn_name, "dev", "prod")
+  if (is.null(config$server)) {
+    qry <- "select * from IDEA.AppControl1.AppControl1 where AppNM like ?"
+    app_control_1 <-
+      import_data(
+        config = config,
+        qry = qry,
+        params = list(config$application))
+  } else {
+    qry <- "select * from IDEA.AppControl1.AppControl1 where ServerNM like ? and AppNM like ?"
+    app_control_1 <-
+      import_data(
+        config = config,
+        qry = qry,
+        params = list(config$server, config$application))
+  }
   app_control_today <-
     app_control_1 %>%
     dplyr::filter(
@@ -43,6 +55,13 @@ app_control <- function(config = NULL) {
     run_flag <<- as.logical(min(app_control_any_day$RunFLG, na.rm = FALSE))
     email_flag <<- as.logical(min(app_control_any_day$MailFLG, na.rm = FALSE))
     app_control_any_day
+  } else if (permissive) {
+    msg <- "No entry created in App Control 1."
+    warning(msg)
+    cat(msg)
+    run_flag <<- TRUE
+    email_flag <<- TRUE
+    app_control_1
   } else {
     msg <- "Report not run because no entry created in App Control 1."
     warning(msg)
